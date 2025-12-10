@@ -3,7 +3,6 @@ import { Menu, X, ArrowRight, Globe, BarChart3, PenTool, Zap, MessageCircle, Che
 
 /**
  * TRANSLATIONS & CONTENT DATA
- * This object holds all text content for English (en) and Russian (ru).
  */
 const TRANSLATIONS = {
   en: {
@@ -20,9 +19,8 @@ const TRANSLATIONS = {
     agency: {
       title: 'Agency',
       manifesto_label: 'THE MANIFESTO',
-      // Using a function or fragment for complex HTML content in translations
       manifesto_headline: (
-        <>We don't just design. We cause <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">Resonance</span>.</>
+        <>We don't just design. We cause <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E9BAFF] to-blue-500">Resonance</span>.</>
       ),
       p1: 'The most risky thing for a brand today is to be unnoticed. Silence is fatal. We operate as an open platform for bold ideas, rejecting the safety of "best practices" in favor of breakthrough strategies.',
       p2: 'We bring together thinkers, creators, and pioneers to collectively realize projects in diverse fields—from deep market analysis to virtual worlds, from music to linguistics, from art to commerce.',
@@ -84,7 +82,7 @@ const TRANSLATIONS = {
       title: 'Агентство',
       manifesto_label: 'ФИЛОСОФИЯ',
       manifesto_headline: (
-        <>МЫ СОЗДАЁМ РАБОТЫ, КОТОРЫЕ ВЫЗЫВАЮТ <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">РЕЗОНАНС</span>.</>
+        <>МЫ СОЗДАЁМ РАБОТЫ, КОТОРЫЕ ВЫЗЫВАЮТ <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E9BAFF] to-blue-500">РЕЗОНАНС</span>.</>
       ),
       p1: 'Самое рискованное для бренда — это быть незамеченным. Мы — открытая площадка для смелых идей и коллабораций.',
       p2: 'Здесь мы объединяем мыслителей, творцов и первопроходцев, чтобы совместно воплощать проекты в самых разных областях — от исследований до виртуальных миров, от музыки до лингвистики.',
@@ -142,7 +140,8 @@ const CASES_DATA = {
       year: '2024',
       description: 'A complete rebranding for a medical cosmetics giant. We shifted the perception from generic skincare to scientific precision.',
       color: 'from-orange-500/20 to-amber-900/40',
-      tags: ['Rebranding', 'Packaging', 'Strategy']
+      tags: ['Rebranding', 'Packaging', 'Strategy'],
+      video: '1138619534' // Added Video ID
     },
     {
       id: 'zielinski',
@@ -189,7 +188,8 @@ const CASES_DATA = {
       year: '2024',
       description: 'Полный ребрендинг гиганта медицинской косметики. Мы сместили восприятие от обычного ухода к научной точности.',
       color: 'from-orange-500/20 to-amber-900/40',
-      tags: ['Ребрендинг', 'Упаковка', 'Стратегия']
+      tags: ['Ребрендинг', 'Упаковка', 'Стратегия'],
+      video: '1138619534' // Added Video ID
     },
     {
       id: 'zielinski',
@@ -232,7 +232,6 @@ const CASES_DATA = {
 
 /**
  * CUSTOM HOOK: USE CANVAS SPHERE
- * Pure JS animation logic inside a React Hook
  */
 const useCanvasSphere = (canvasRef) => {
   useEffect(() => {
@@ -243,8 +242,7 @@ const useCanvasSphere = (canvasRef) => {
     let width = canvas.width = canvas.offsetWidth;
     let height = canvas.height = canvas.offsetHeight;
     
-    // Sphere parameters
-    const GLOBE_RADIUS = width < 768 ? 120 : 220;
+    const GLOBE_RADIUS = width < 768 ? 240 : 440;
     const DOT_RADIUS = 1.5;
     const DOT_COUNT = 600;
     const PROJECTION_CENTER_X = width / 2;
@@ -256,11 +254,9 @@ const useCanvasSphere = (canvasRef) => {
     let mouseX = 0;
     let mouseY = 0;
 
-    // Initialize dots
     for (let i = 0; i < DOT_COUNT; i++) {
       const theta = Math.random() * 2 * Math.PI; 
       const phi = Math.acos((Math.random() * 2) - 1); 
-      
       dots.push({
         x: GLOBE_RADIUS * Math.sin(phi) * Math.cos(theta),
         y: GLOBE_RADIUS * Math.sin(phi) * Math.sin(theta),
@@ -332,7 +328,7 @@ const NavItem = ({ children, page, activePage, setPage }) => (
     `}
   >
     {children}
-    <span className={`absolute -bottom-2 left-0 h-[2px] bg-purple-500 transition-all duration-300 ${activePage === page ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
+    <span className={`absolute -bottom-2 left-0 h-[2px] bg-[#E9BAFF] transition-all duration-300 ${activePage === page ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
   </button>
 );
 
@@ -342,11 +338,13 @@ const PageHome = ({ setPage, content }) => {
   useCanvasSphere(canvasRef);
 
   return (
-    <div className="relative h-screen flex flex-col justify-center items-center overflow-hidden">
+    <div className="relative flex-grow flex flex-col justify-center items-center overflow-hidden h-[calc(100vh-100px)] md:h-screen">
+      {/* Canvas z-0 ensures it's behind text */}
       <canvas 
         ref={canvasRef} 
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-60 pointer-events-auto"
+        className="absolute inset-0 w-full h-full opacity-60 pointer-events-auto z-0"
       />
+      {/* Content z-10 ensures it's above canvas */}
       <div className="relative z-10 text-center px-4 max-w-5xl mx-auto mix-blend-difference">
         <h2 className="text-[12vw] md:text-[9rem] leading-[0.85] font-black tracking-tighter uppercase mb-6 mix-blend-overlay">
           Ollimp
@@ -358,12 +356,12 @@ const PageHome = ({ setPage, content }) => {
         <div className="mt-12 flex flex-col md:flex-row gap-6 justify-center items-center">
           <button 
             onClick={() => setPage('cases')}
-            className="group relative px-8 py-3 overflow-hidden border border-white/20 bg-transparent text-white transition-all hover:border-purple-500"
+            className="group relative px-8 py-3 overflow-hidden border border-white/20 bg-transparent text-white transition-all hover:border-[#E9BAFF]"
           >
             <span className="relative z-10 text-xs font-bold uppercase tracking-[0.2em] flex items-center gap-2">
               {content.cta} <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform"/>
             </span>
-            <div className="absolute inset-0 bg-purple-500/10 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
+            <div className="absolute inset-0 bg-[#E9BAFF]/10 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
           </button>
         </div>
       </div>
@@ -373,13 +371,13 @@ const PageHome = ({ setPage, content }) => {
 
 // --- PAGE: AGENCY ---
 const PageAgency = ({ content }) => (
-  <div className="pt-32 px-6 min-h-screen">
+  <div className="pt-32 px-6 flex-grow flex flex-col justify-center">
     <div className="container mx-auto max-w-5xl">
       <h1 className="text-6xl md:text-9xl font-black uppercase tracking-tighter mb-20">{content.title}</h1>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start mb-32">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start mb-20">
         <div className="sticky top-32">
-          <span className="text-purple-500 font-mono text-xs tracking-widest mb-4 block">{content.manifesto_label}</span>
+          <span className="text-[#E9BAFF] font-mono text-xs tracking-widest mb-4 block">{content.manifesto_label}</span>
           <h2 className="text-3xl md:text-4xl font-bold uppercase leading-tight">
             {content.manifesto_headline}
           </h2>
@@ -393,7 +391,7 @@ const PageAgency = ({ content }) => (
 
       <div className="border-t border-neutral-800 pt-16 grid grid-cols-2 md:grid-cols-4 gap-8 mb-20">
         <div>
-          <h3 className="text-4xl font-bold text-white mb-2">25+</h3>
+          <h3 className="text-4xl font-bold text-white mb-2">43+</h3>
           <p className="text-neutral-500 text-xs uppercase tracking-widest">{content.stats.clients}</p>
         </div>
         <div>
@@ -405,7 +403,7 @@ const PageAgency = ({ content }) => (
           <p className="text-neutral-500 text-xs uppercase tracking-widest">{content.stats.awards}</p>
         </div>
         <div>
-          <h3 className="text-4xl font-bold text-white mb-2">2025</h3>
+          <h3 className="text-4xl font-bold text-white mb-2">2020</h3>
           <p className="text-neutral-500 text-xs uppercase tracking-widest">{content.stats.est}</p>
         </div>
       </div>
@@ -415,16 +413,16 @@ const PageAgency = ({ content }) => (
 
 // --- PAGE: SERVICES ---
 const PageServices = ({ content }) => (
-  <div className="pt-32 px-6 min-h-screen">
+  <div className="pt-32 px-6 flex-grow flex flex-col justify-center">
     <div className="container mx-auto max-w-5xl">
       <h1 className="text-6xl md:text-9xl font-black uppercase tracking-tighter mb-20">{content.title}</h1>
       
-      <div className="space-y-4">
+      <div className="space-y-4 mb-20">
         {content.items.map((service) => (
-          <div key={service.id} className="group border border-neutral-800 hover:border-purple-500/50 hover:bg-neutral-900/30 transition-all duration-500 p-8 md:p-12">
+          <div key={service.id} className="group border border-neutral-800 hover:border-[#E9BAFF]/50 hover:bg-neutral-900/30 transition-all duration-500 p-8 md:p-12">
             <div className="flex flex-col md:flex-row gap-8 justify-between items-start">
               <div className="md:w-1/3">
-                <span className="text-purple-500 font-mono text-sm block mb-4">/{service.id}</span>
+                <span className="text-[#E9BAFF] font-mono text-sm block mb-4">/{service.id}</span>
                 <h3 className="text-3xl md:text-4xl font-bold uppercase">{service.title}</h3>
               </div>
               <div className="md:w-2/3">
@@ -447,7 +445,7 @@ const PageServices = ({ content }) => (
 
 // --- PAGE: CASES ---
 const PageCases = ({ lang, content }) => (
-  <div className="pt-32 px-6 min-h-screen">
+  <div className="pt-32 px-6 flex-grow flex flex-col justify-center">
     <div className="container mx-auto max-w-6xl">
       <h1 className="text-6xl md:text-9xl font-black uppercase tracking-tighter mb-20">{content.title}</h1>
       
@@ -457,9 +455,21 @@ const PageCases = ({ lang, content }) => (
             key={item.id} 
             className={`group relative min-h-[500px] bg-neutral-900 overflow-hidden flex flex-col justify-end p-8 md:p-12 cursor-pointer ${index === 0 || index === 3 ? 'md:col-span-2 md:min-h-[600px]' : ''}`}
           >
-            {/* Background Gradient simulating the screenshot vibes */}
-            <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-40 group-hover:opacity-60 transition-all duration-700`}></div>
-            <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>
+            {/* Render video background if available */}
+            {item.video && (
+              <div className="absolute inset-0 z-0 pointer-events-none">
+                <iframe 
+                  src={`https://player.vimeo.com/video/${item.video}?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1`}
+                  className="absolute inset-0 w-full h-full scale-110"
+                  frameBorder="0" 
+                  allow="autoplay; fullscreen; picture-in-picture" 
+                  title={item.title}
+                ></iframe>
+              </div>
+            )}
+
+            <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-40 group-hover:opacity-60 transition-all duration-700 z-1`}></div>
+            <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-1"></div>
 
             <div className="relative z-10 transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
               <div className="flex justify-between items-start mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
@@ -487,7 +497,7 @@ const PageCases = ({ lang, content }) => (
 
 // --- PAGE: CONTACT ---
 const PageContact = ({ content }) => (
-  <div className="pt-32 px-6 min-h-screen bg-[#050505]">
+  <div className="pt-32 px-6 flex-grow flex flex-col justify-center bg-[#050505]">
     <div className="container mx-auto max-w-4xl">
       <h1 className="text-6xl md:text-9xl font-black uppercase tracking-tighter mb-12">{content.title}</h1>
       
@@ -500,33 +510,33 @@ const PageContact = ({ content }) => (
           <div className="space-y-8">
             <div>
               <h4 className="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-2">{content.sections.new}</h4>
-              <a href="mailto:info@ollimp.com" className="text-2xl text-white hover:text-purple-500 transition-colors border-b border-neutral-800 pb-1">info@ollimp.com</a>
+              <a href="mailto:info@ollimp.com" className="text-2xl text-white hover:text-[#E9BAFF] transition-colors border-b border-neutral-800 pb-1">info@ollimp.com</a>
             </div>
             <div>
               <h4 className="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-2">{content.sections.partners}</h4>
-              <a href="mailto:partners@ollimp.com" className="text-2xl text-white hover:text-purple-500 transition-colors border-b border-neutral-800 pb-1">partners@ollimp.com</a>
+              <a href="mailto:partners@ollimp.com" className="text-2xl text-white hover:text-[#E9BAFF] transition-colors border-b border-neutral-800 pb-1">partners@ollimp.com</a>
             </div>
             <div>
               <h4 className="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-2">{content.sections.careers}</h4>
-              <a href="mailto:hr@ollimp.com" className="text-2xl text-white hover:text-purple-500 transition-colors border-b border-neutral-800 pb-1">hr@ollimp.com</a>
+              <a href="mailto:hr@ollimp.com" className="text-2xl text-white hover:text-[#E9BAFF] transition-colors border-b border-neutral-800 pb-1">hr@ollimp.com</a>
             </div>
           </div>
         </div>
 
         <form className="space-y-8 bg-neutral-900/20 p-8 border border-neutral-800">
           <div className="group">
-            <label className="block text-xs font-mono text-neutral-500 mb-2 uppercase tracking-widest group-focus-within:text-purple-500 transition-colors">{content.form.name}</label>
-            <input type="text" className="w-full bg-transparent border-b border-neutral-700 py-3 text-white focus:outline-none focus:border-purple-500 transition-colors" />
+            <label className="block text-xs font-mono text-neutral-500 mb-2 uppercase tracking-widest group-focus-within:text-[#E9BAFF] transition-colors">{content.form.name}</label>
+            <input type="text" className="w-full bg-transparent border-b border-neutral-700 py-3 text-white focus:outline-none focus:border-[#E9BAFF] transition-colors" />
           </div>
           <div className="group">
-            <label className="block text-xs font-mono text-neutral-500 mb-2 uppercase tracking-widest group-focus-within:text-purple-500 transition-colors">{content.form.email}</label>
-            <input type="email" className="w-full bg-transparent border-b border-neutral-700 py-3 text-white focus:outline-none focus:border-purple-500 transition-colors" />
+            <label className="block text-xs font-mono text-neutral-500 mb-2 uppercase tracking-widest group-focus-within:text-[#E9BAFF] transition-colors">{content.form.email}</label>
+            <input type="email" className="w-full bg-transparent border-b border-neutral-700 py-3 text-white focus:outline-none focus:border-[#E9BAFF] transition-colors" />
           </div>
           <div className="group">
-            <label className="block text-xs font-mono text-neutral-500 mb-2 uppercase tracking-widest group-focus-within:text-purple-500 transition-colors">{content.form.details}</label>
-            <textarea rows="4" className="w-full bg-transparent border-b border-neutral-700 py-3 text-white focus:outline-none focus:border-purple-500 transition-colors resize-none"></textarea>
+            <label className="block text-xs font-mono text-neutral-500 mb-2 uppercase tracking-widest group-focus-within:text-[#E9BAFF] transition-colors">{content.form.details}</label>
+            <textarea rows="4" className="w-full bg-transparent border-b border-neutral-700 py-3 text-white focus:outline-none focus:border-[#E9BAFF] transition-colors resize-none"></textarea>
           </div>
-          <button className="w-full bg-white text-black py-4 font-bold uppercase tracking-widest hover:bg-purple-500 hover:text-white transition-all duration-300">
+          <button className="w-full bg-white text-black py-4 font-bold uppercase tracking-widest hover:bg-[#E9BAFF] hover:text-white transition-all duration-300">
             {content.form.submit}
           </button>
         </form>
@@ -538,7 +548,7 @@ const PageContact = ({ content }) => (
 // --- MAIN APP COMPONENT ---
 export default function OllimpRebuild() {
   const [activePage, setActivePage] = useState('home');
-  const [lang, setLang] = useState('ru'); // Default to RU based on request
+  const [lang, setLang] = useState('ru'); 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -550,7 +560,6 @@ export default function OllimpRebuild() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Scroll to top when page changes
   useEffect(() => {
     window.scrollTo(0, 0);
     setMobileMenuOpen(false);
@@ -570,7 +579,7 @@ export default function OllimpRebuild() {
   };
 
   return (
-    <div className="bg-[#050505] min-h-screen text-white font-sans selection:bg-purple-500 selection:text-white">
+    <div className="bg-[#050505] min-h-screen flex flex-col text-white font-sans selection:bg-[#E9BAFF] selection:text-black">
       
       {/* HEADER */}
       <header 
@@ -583,7 +592,7 @@ export default function OllimpRebuild() {
             <div onClick={() => setActivePage('home')}>
               <h1 className="text-2xl font-black tracking-tighter uppercase relative group cursor-pointer">
                 Ollimp
-                <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-purple-500 transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#E9BAFF] transition-all duration-300 group-hover:w-full"></span>
               </h1>
             </div>
 
@@ -603,7 +612,7 @@ export default function OllimpRebuild() {
             <NavItem page="services" activePage={activePage} setPage={setActivePage}>{content.nav.services}</NavItem>
             <button 
               onClick={() => setActivePage('contact')}
-              className="px-6 py-2 bg-white text-black text-xs font-bold uppercase tracking-widest hover:bg-purple-500 hover:text-white transition-colors duration-300"
+              className="px-6 py-2 bg-white text-black text-xs font-bold uppercase tracking-widest hover:bg-[#E9BAFF] hover:text-white transition-colors duration-300"
             >
               {content.nav.start}
             </button>
@@ -621,28 +630,28 @@ export default function OllimpRebuild() {
 
       {/* Mobile Menu */}
       <div className={`fixed inset-0 bg-black z-40 flex flex-col items-center justify-center gap-8 transition-transform duration-500 md:hidden ${mobileMenuOpen ? 'translate-y-0' : '-translate-y-full'}`}>
-        <button onClick={() => setActivePage('agency')} className="text-3xl font-bold uppercase hover:text-purple-500">{content.nav.agency}</button>
-        <button onClick={() => setActivePage('cases')} className="text-3xl font-bold uppercase hover:text-purple-500">{content.nav.cases}</button>
-        <button onClick={() => setActivePage('services')} className="text-3xl font-bold uppercase hover:text-purple-500">{content.nav.services}</button>
+        <button onClick={() => setActivePage('agency')} className="text-3xl font-bold uppercase hover:text-[#E9BAFF]">{content.nav.agency}</button>
+        <button onClick={() => setActivePage('cases')} className="text-3xl font-bold uppercase hover:text-[#E9BAFF]">{content.nav.cases}</button>
+        <button onClick={() => setActivePage('services')} className="text-3xl font-bold uppercase hover:text-[#E9BAFF]">{content.nav.services}</button>
         <button onClick={() => setActivePage('contact')} className="text-xl text-neutral-400 mt-8">{content.nav.contact}</button>
       </div>
 
       {/* PAGE CONTENT */}
-      <main className="min-h-screen">
+      <main className="flex-grow flex flex-col pt-0">
         {renderPage()}
       </main>
 
-      {/* FOOTER - Only show on pages that aren't Home */}
+      {/* FOOTER */}
       {activePage !== 'home' && (
-        <footer className="py-12 px-6 border-t border-neutral-900 text-neutral-500 text-xs font-mono uppercase tracking-widest bg-[#050505]">
+        <footer className="py-12 px-6 border-t border-neutral-900 text-neutral-500 text-xs font-mono uppercase tracking-widest bg-[#050505] mt-auto">
           <div className="container mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex flex-col items-center md:items-start gap-2">
               <span className="text-white font-bold text-lg">Ollimp</span>
-              <span>© 2025 Ollimp Agency</span>
+              <span>© 2020 Ollimp Agency</span>
             </div>
             
             <div className="flex gap-8">
-              <a href="#" className="hover:text-white transition-colors">Instagram</a>
+              <a href="https://www.instagram.com/ollimpdotcom/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Instagram</a>
               <a href="#" className="hover:text-white transition-colors">Telegram</a>
               <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
             </div>
