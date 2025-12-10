@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X, ArrowRight, Globe, BarChart3, PenTool, Zap, MessageCircle, ChevronRight, ArrowUpRight } from 'lucide-react';
+import { Menu, X, ArrowRight, Globe, BarChart3, PenTool, Zap, MessageCircle, ChevronRight, ArrowUpRight, Cpu } from 'lucide-react';
 
 /**
  * TRANSLATIONS & CONTENT DATA
@@ -25,7 +25,7 @@ const TRANSLATIONS = {
       p1: 'The most risky thing for a brand today is to be unnoticed. Silence is fatal. We operate as an open platform for bold ideas, rejecting the safety of "best practices" in favor of breakthrough strategies.',
       p2: 'We bring together thinkers, creators, and pioneers to collectively realize projects in diverse fields—from deep market analysis to virtual worlds, from music to linguistics, from art to commerce.',
       p3: 'Our process is brutal yet refined. We strip away the noise to find the core truth of your business, then we amplify it until it\'s impossible to ignore.',
-      stats: { clients: 'Global Clients', growth: 'Avg. Growth', awards: 'Industry Awards', est: 'Established' }
+      stats: { clients: 'Global Clients', growth: 'Avg. Growth', awards: 'Industry Awards', est: 'Years Experience' }
     },
     services: {
       title: 'Services',
@@ -33,25 +33,31 @@ const TRANSLATIONS = {
         {
           id: '01',
           title: 'Analysis',
-          desc: 'Deep investigations to identify precise market positioning. We uncover competitive advantages before we design a single pixel.',
+          desc: 'Deep research for precise market positioning and understanding competitive advantages.',
           skills: ['Market Research', 'Competitor Audits', 'User Persona', 'Trend Forecasting']
         },
         {
           id: '02',
           title: 'Strategy',
-          desc: 'We define your brand\'s core purpose. Our strategies aren’t just documents; they are actionable roadmaps for market dominance.',
+          desc: 'Brand strategy and communication strategy. We define the core and the message.',
           skills: ['Brand Architecture', 'Communication Strategy', 'Tone of Voice', 'Growth Roadmap']
         },
         {
           id: '03',
-          title: 'Design',
-          desc: 'Visual systems that speak louder than words. From corporate identity to digital product design, we ensure your brand looks as innovative as it feels.',
-          skills: ['Visual Identity', 'UI/UX Design', 'Motion Graphics', 'Packaging']
+          title: 'Optimization',
+          desc: 'Helping businesses adapt to modern technologies and IT infrastructure development.',
+          skills: ['Digital Transformation', 'IT Infrastructure', 'Process Optimization', 'Tech Stack']
         },
         {
           id: '04',
+          title: 'Design',
+          desc: 'Corporate identity and design support. Visual systems that speak louder than words.',
+          skills: ['Visual Identity', 'UI/UX Design', 'Motion Graphics', 'Packaging']
+        },
+        {
+          id: '05',
           title: 'Marketing',
-          desc: 'Seeding, influencer marketing, and media buying. We amplify your message across the right channels to ensure maximum resonance.',
+          desc: 'Media advertising, influencer marketing, ad campaign support, seeding.',
           skills: ['Social Media', 'Influencer Marketing', 'Performance', 'Content Creation']
         }
       ]
@@ -87,7 +93,7 @@ const TRANSLATIONS = {
       p1: 'Самое рискованное для бренда — это быть незамеченным. Мы — открытая площадка для смелых идей и коллабораций.',
       p2: 'Здесь мы объединяем мыслителей, творцов и первопроходцев, чтобы совместно воплощать проекты в самых разных областях — от исследований до виртуальных миров, от музыки до лингвистики.',
       p3: 'Вместе мы раздвигаем границы возможного и вносим свой вклад в будущее. Мы убираем лишний шум, чтобы найти истину вашего бизнеса и усилить её.',
-      stats: { clients: 'Клиентов', growth: 'Рост продаж', awards: 'Наград', est: 'Основано' }
+      stats: { clients: 'Клиентов', growth: 'Рост продаж', awards: 'Наград', est: 'Лет Опыта' }
     },
     services: {
       title: 'Услуги',
@@ -95,25 +101,31 @@ const TRANSLATIONS = {
         {
           id: '01',
           title: 'Analysis',
-          desc: 'Глубокие исследования для точного позиционирования на рынке. Понимание конкурентных преимуществ.',
+          desc: 'Глубокие исследования для точного позиционирования на рынке, понимания конкурентных преимуществ.',
           skills: ['Маркетинговые исследования', 'Аудит конкурентов', 'Анализ трендов', 'Customer Journey']
         },
         {
           id: '02',
           title: 'Strategy',
-          desc: 'Бренд-стратегия и коммуникационная стратегия. Мы определяем цель бренда и прокладываем маршрут к доминированию на рынке.',
+          desc: 'Бренд стратегия, коммуникационная стратегия.',
           skills: ['Бренд-платформа', 'Tone of Voice', 'Стратегия роста', 'Позиционирование']
         },
         {
           id: '03',
-          title: 'Design',
-          desc: 'Фирменный стиль и дизайн-поддержка. Мы создаем визуальные системы, которые говорят громче слов.',
-          skills: ['Айдентика', 'UI/UX Дизайн', 'Моушн-дизайн', 'Упаковка']
+          title: 'Optimization',
+          desc: 'Помощь в адаптации бизнеса к современным технологиям и разработке IT-инфраструктуры.',
+          skills: ['Цифровая трансформация', 'IT инфраструктура', 'Оптимизация процессов', 'Tech Stack']
         },
         {
           id: '04',
+          title: 'Design',
+          desc: 'Фирменный стиль, дизайн-поддержка.',
+          skills: ['Айдентика', 'UI/UX Дизайн', 'Моушн-дизайн', 'Упаковка']
+        },
+        {
+          id: '05',
           title: 'Marketing',
-          desc: 'Медийная реклама, инфлюенс-маркетинг, поддержка рекламных кампаний и посевы.',
+          desc: 'Медийная реклама, инфлюенс-маркетинг, поддержка рекламных кампаний, посевы.',
           skills: ['SMM', 'Influencer Marketing', 'Таргетинг', 'Контент-продакшн']
         }
       ]
@@ -141,7 +153,7 @@ const CASES_DATA = {
       description: 'A complete rebranding for a medical cosmetics giant. We shifted the perception from generic skincare to scientific precision.',
       color: 'from-orange-500/20 to-amber-900/40',
       tags: ['Rebranding', 'Packaging', 'Strategy'],
-      video: '1138619534' // Added Video ID
+      video: '1138619534' 
     },
     {
       id: 'zielinski',
@@ -189,7 +201,7 @@ const CASES_DATA = {
       description: 'Полный ребрендинг гиганта медицинской косметики. Мы сместили восприятие от обычного ухода к научной точности.',
       color: 'from-orange-500/20 to-amber-900/40',
       tags: ['Ребрендинг', 'Упаковка', 'Стратегия'],
-      video: '1138619534' // Added Video ID
+      video: '1138619534'
     },
     {
       id: 'zielinski',
@@ -245,9 +257,10 @@ const useCanvasSphere = (canvasRef) => {
     const GLOBE_RADIUS = width < 768 ? 240 : 440;
     const DOT_RADIUS = 1.5;
     const DOT_COUNT = 600;
-    const PROJECTION_CENTER_X = width / 2;
-    const PROJECTION_CENTER_Y = height / 2;
-    const FIELD_OF_VIEW = width * 0.8;
+    // Updated to let variables so they can be re-calculated
+    let PROJECTION_CENTER_X = width / 2;
+    let PROJECTION_CENTER_Y = height / 2;
+    let FIELD_OF_VIEW = width * 0.8;
 
     let dots = [];
     let rotation = 0.002;
@@ -267,6 +280,10 @@ const useCanvasSphere = (canvasRef) => {
     const onResize = () => {
       width = canvas.width = canvas.offsetWidth;
       height = canvas.height = canvas.offsetHeight;
+      // Recalculate center and FOV on resize to fix off-center bug
+      PROJECTION_CENTER_X = width / 2;
+      PROJECTION_CENTER_Y = height / 2;
+      FIELD_OF_VIEW = width * 0.8;
     };
 
     const onMouseMove = (e) => {
@@ -403,7 +420,7 @@ const PageAgency = ({ content }) => (
           <p className="text-neutral-500 text-xs uppercase tracking-widest">{content.stats.awards}</p>
         </div>
         <div>
-          <h3 className="text-4xl font-bold text-white mb-2">2020</h3>
+          <h3 className="text-4xl font-bold text-white mb-2">5+</h3>
           <p className="text-neutral-500 text-xs uppercase tracking-widest">{content.stats.est}</p>
         </div>
       </div>
@@ -426,7 +443,7 @@ const PageServices = ({ content }) => (
                 <h3 className="text-3xl md:text-4xl font-bold uppercase">{service.title}</h3>
               </div>
               <div className="md:w-2/3">
-                <p className="text-neutral-400 text-lg mb-8 max-w-xl">{service.desc}</p>
+                <p className="text-neutral-400 text-lg mb-8 max-w-xl whitespace-pre-line">{service.desc}</p>
                 <div className="flex flex-wrap gap-3">
                   {service.skills.map(skill => (
                     <span key={skill} className="text-xs font-mono uppercase border border-neutral-700 px-3 py-1 rounded-full text-neutral-500 group-hover:text-white group-hover:border-neutral-500 transition-colors">
@@ -548,7 +565,7 @@ const PageContact = ({ content }) => (
 // --- MAIN APP COMPONENT ---
 export default function OllimpRebuild() {
   const [activePage, setActivePage] = useState('home');
-  const [lang, setLang] = useState('ru'); 
+  const [lang, setLang] = useState('en'); 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -599,9 +616,9 @@ export default function OllimpRebuild() {
             {/* Language Switcher */}
             <button 
               onClick={toggleLang} 
-              className="text-xs font-mono font-bold uppercase tracking-widest text-neutral-500 hover:text-white transition-colors border border-neutral-800 rounded-full px-3 py-1"
+              className="text-xs font-mono font-bold uppercase tracking-widest text-neutral-500 hover:text-white transition-colors border border-neutral-800 rounded-full px-3 py-1 w-10 text-center"
             >
-              {lang === 'en' ? 'RU' : 'EN'}
+              {lang === 'en' ? 'EN' : 'RU'}
             </button>
           </div>
 
